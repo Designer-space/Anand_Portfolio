@@ -102,9 +102,9 @@ navToggle.addEventListener('click', ()=>{
 
 window.addEventListener('scroll', () =>{
   // console.log(window.pageYOffset);
-  if( window.pageYOffset > 1 ){
-    primaryHeader.classList.remove("transperantbg");
-  } else{
+  if( window.pageYOffset > 15 ){
     primaryHeader.classList.add("transperantbg");
+  } else{
+    primaryHeader.classList.remove("transperantbg");
   }
 })
