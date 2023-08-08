@@ -86,10 +86,25 @@ const text = document.querySelector(".text p");
 text.innerHTML = text.innerText.split("").map((char, i) =>`<span style="transform: rotate(${i * 7.8}deg)">${char}</span>`).join("")
 
 
+
+// Toggle Navigation Menu
+const primaryHeader = document.querySelector('.primary-header');
 const navToggle = document.querySelector('.mobile-nav-toggle');
 const primaryNav = document.querySelector('.primary-navigation');
 
 navToggle.addEventListener('click', ()=>{
-  primaryNav.hasAttribute('data-visible') ? navToggle.setAttribute('aria-expanded', false) : navToggle.setAttribute('aria-expanded', true);
-  primaryNav.toggleAttribute('data-visible')
+  primaryNav.hasAttribute('data-visible') 
+    ? navToggle.setAttribute('aria-expanded', false) 
+    : navToggle.setAttribute('aria-expanded', true);
+  primaryNav.toggleAttribute('data-visible');
+  primaryHeader.toggleAttribute('data-overlay')
+})
+
+window.addEventListener('scroll', () =>{
+  // console.log(window.pageYOffset);
+  if( window.pageYOffset > 1 ){
+    primaryHeader.classList.remove("transperantbg");
+  } else{
+    primaryHeader.classList.add("transperantbg");
+  }
 })
