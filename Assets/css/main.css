@@ -178,57 +178,8 @@ body {
 }
 
 .nav-list a{
-    color: var(--clr-primary-100);
-  }
-@media(max-width: 50rem){
-  .primary-navigation{
-    display: none;
-
-    position: fixed;
-    background-color: var(--clr-primary-700);
-    inset: 7rem 3rem auto;
-    z-index: 99;
-  }
-
-  .primary-header[data-overlay]::before{
-    content: '';
-    position:absolute;
-    z-index: -97;
-    inset: 0;
-    height: 100vh;
-
-    background-color: var(--clr-primary-700);
-  }
-
-  .nav-list{
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    font-size: 32px;
-    padding-block: 2rem;
-  }
-
-  .primary-navigation[data-visible]{
-    display: block;
-  }
-
-  .mobile-nav-toggle{
-    display: block;
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
-    padding: .5rem;
-  }
-  
-  .mobile-nav-toggle .icon-close{
-    display: none;
-  }
-
-  .downloadBtn{
-    display: none;
-  }
+  color: var(--clr-primary-100);
 }
-
 
 .logo{
   width: fit-content;
@@ -284,7 +235,7 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 1rem;
+  padding-inline: 1rem;
 }
 
 .hero_title > h1 {
@@ -896,6 +847,88 @@ section {
 
 /* -------------------------- Contact Section End ------------------------------ */
 
+/* -------------------------- Blog Post Page Start ------------------------------ */
+
+.blog-title{
+  text-align: center;
+  font-size: clamp(2rem, 1.7131rem + 1.4298vw, 3rem);
+
+  margin-block: 2rem;
+}
+
+.post-wrapper{
+  display: grid;
+  gap: 2rem;
+  padding-block-end: 3rem;
+}
+
+.blog-post{
+  padding: 1.5rem;
+  border: 1px solid var(--clr-primary-200);
+  border-radius: 1.5vmin;
+  background-color: hsl(227, 15%, 12%);
+
+  position: relative;
+  isolation: isolate;
+  box-shadow: 0 0 36px rgba(0,0,0,.1);
+  transition: transform .2s linear;
+}
+
+.blog-post:hover{
+  transform: scale(1.01);
+}
+
+.blog-post > a{
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.blog-post_image_wrapper{
+  border-radius: .75vmin;
+  overflow: hidden;
+}
+
+.blog-post_content_wrapper{
+  padding-block: 3vmin;
+  padding-inline: 1rem;
+}
+
+.blog-post_content_wrapper h2{
+  font-size: clamp(1.2rem, 1.1139rem + 0.429vw, 1.5rem);
+  line-height: 1.3;
+  color: var(--clr-primary-100);
+}
+
+.blog-post_content_wrapper .date{
+  font-size: .8rem;
+  padding-block: 1rem;
+}
+.blog-post_content_wrapper .description{
+  padding-block: .5rem;
+}
+
+.blog-post_content_wrapper .lable_wrapper{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.blog-post_content_wrapper .blog_label{
+  border: 1px solid var(--clr-primary-200);
+  padding: 8px 20px;
+  font-weight: 600;
+}
+
+
+
+/* -------------------------- Blog Post Page End ------------------------------ */
+
 
 /* -------------------------- Media Queries ------------------------------ */
 @media screen and (max-width: 700px) {
@@ -910,6 +943,61 @@ section {
   }
 }
 
+@media(min-width:800px){
+  .post-wrapper{
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
+}
+
+@media(max-width: 800px){
+  .primary-navigation{
+    display: none;
+
+    position: fixed;
+    background-color: var(--clr-primary-700);
+    inset: 7rem 3rem auto;
+    z-index: 99;
+  }
+
+  .primary-header[data-overlay]::before{
+    content: '';
+    position:absolute;
+    z-index: -97;
+    inset: 0;
+    height: 100vh;
+
+    background-color: var(--clr-primary-700);
+  }
+
+  .nav-list{
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 32px;
+    padding-block: 2rem;
+  }
+
+  .primary-navigation[data-visible]{
+    display: block;
+  }
+
+  .mobile-nav-toggle{
+    display: block;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: .5rem;
+  }
+  
+  .mobile-nav-toggle .icon-close{
+    display: none;
+  }
+
+  .downloadBtn{
+    display: none;
+  }
+}
+
 @media (min-width: 900px){
   .contact-form .second-container form .form-group:first-child{
     display: grid;
@@ -919,16 +1007,15 @@ section {
   .contact-form .second-container form .form-group label{
     grid-area: 1 / 1 / 2 / 3;
   }
-
-
+  
   .line{
     display: block;
   }
-
+  
   .about-wrapper{
     display: flex;
   }
-
+  
   .cartoon{
     margin-top: 0;
   }
@@ -936,5 +1023,26 @@ section {
   .about_content{
     max-width: 550px;
   }
-
+  
 }
+
+/* -------------------------- TO THE TOP BTN START ------------------------------ */
+
+.toTopBtn{
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 90;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 10px;
+  padding:clamp(0.5rem, 0.3571rem + 0.7143vw, 1rem);
+  font-weight: 600;
+  font-size: clamp(0.9375rem, 0.9044rem + 0.1653vw, 1.0625rem);
+  color: var(--clr-primary-100);
+  background-color: var(--clr-accent-400);
+}
+
+/* -------------------------- TO THE TOP BTN END ------------------------------ */

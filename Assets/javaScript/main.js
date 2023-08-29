@@ -1,90 +1,28 @@
 console.clear();
 
-var canvas = document.getElementById('canvas'),
-    ctx = canvas.getContext('2d');
+let mybutton = document.getElementById("topBtn");
 
-var width = canvas.width = window.innerWidth,
-    height = canvas.height = window.innerHeight;
+mybutton.addEventListener("click", topFunction )
 
-window.addEventListener('resize',function(){
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-});
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
 
-
-var circ = (4*(Math.sqrt(2)-1)/3);
-var c = circ;
-
-var count = Math.PI;
-
-function drawBezierCircle(cx,cy,r){
-
-  var c;
-  var offsetX = 20 * Math.sin(count);
-  var offsetY = 15 * Math.cos(count * 2);
-  var num = 4;
-  if (width > 1440) {
-    num = 5
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
   }
-  r = width / r * r / num;
-  
-  count += 0.03;
-  
-  ctx.translate(cx,cy); // translate to centerpoint
-
-  ctx.beginPath();
-  
-  // top right
-  c = circ + ( 0.2 * Math.sin(count) );
-  ctx.moveTo(offsetX + 0, offsetY + -r);
-  ctx.bezierCurveTo(
-    offsetX + c*r, offsetY + -r, 
-    offsetX + r, offsetY + -c*r, 
-    offsetX + r, offsetY + 0
-    );
-    
-  // bottom right
-  c = circ + ( 0.2 * Math.cos(count) );
-  ctx.bezierCurveTo(
-    offsetX + r, offsetY + c*r, 
-    offsetX + c*r, offsetY + r, 
-    offsetX + 0, offsetY + r
-    );
-    
-    // bottom left
-    c = circ + ( 0.2 * Math.sin(count * 2) );
-    ctx.bezierCurveTo(
-      offsetX + -c*r, offsetY + r, 
-      offsetX + -r, offsetY + c*r, 
-      offsetX + -r, offsetY + 0
-      );
-      
-      // top left
-      c = circ + ( 0.2 * Math.cos(count + 1) );
-      ctx.bezierCurveTo(
-        offsetX + -r, offsetY + -c*r, 
-        offsetX + -c*r, offsetY + -r, 
-        offsetX + 0, offsetY + -r
-  );
-  ctx.fillStyle = "#c778dd";
-  ctx.fill();
 }
 
-function render(){
-  requestAnimationFrame(render);
-  
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.clearRect(0, 0, width, height);
-  
-  drawBezierCircle(width/2,height/2,300);
-
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
-
-render();
 
 const text = document.querySelector(".text p");
 text.innerHTML = text.innerText.split("").map((char, i) =>`<span style="transform: rotate(${i * 7.8}deg)">${char}</span>`).join("")
-
 
 
 // Toggle Navigation Menu
@@ -108,3 +46,65 @@ window.addEventListener('scroll', () =>{
     primaryHeader.classList.remove("transperantbg");
   }
 })
+   
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+// Set the canvas size to match the window size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const particles = [];
+
+class Particle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 2;
+        this.speedX = Math.random() - 1;
+        this.speedY = Math.random() - 1;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Wrap particles around the canvas
+        if (this.x < 0 || this.x > canvas.width) {
+            this.speedX = -this.speedX;
+        }
+        if (this.y < 0 || this.y > canvas.height) {
+            this.speedY = -this.speedY;
+        }
+    }
+
+    draw() {
+        ctx.fillStyle = 'white';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function createParticles() {
+    for (let i = 0; i < 150; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        particles.push(new Particle(x, y));
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (const particle of particles) {
+        particle.update();
+        particle.draw();
+    }
+}
+
+createParticles();
+animate();
+
